@@ -2,12 +2,12 @@
   "name": "SpotiPAY",
   "short_name": "SpotiPAY",
   "lang": "tr-TR",
-  "start_url": "/spotify",
+  "start_url": "/spotipay",
   "display": "standalone",
   "theme_color": "#2196f3",
   "icons": [
     {
-      "src": "/spotify/icon.png"
+      "src": "/spotipay/icon.png"
     }
   ]
 }
