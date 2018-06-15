@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC-JnO78G_qX0WgUpP9Wnar6nhMpBJbNMk",
+    authDomain: "SpotiPAY-ibgr.firebaseapp.com",
+    databaseURL: "https://SpotiPAY-ibgr.firebaseio.com",
+    projectId: "SpotiPAY-ibgr",
+    storageBucket: "",
+    messagingSenderId: "979406570169"
+  };
+  firebase.initializeApp(config);
+</script>
+<style type="text/css">
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.animated.infinite {
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes swing {
+  20% {
+    -webkit-transform: rotate3d(0, 0, 1, 15deg);
+    transform: rotate3d(0, 0, 1, 15deg);
+  }
+
+  40% {
+    -webkit-transform: rotate3d(0, 0, 1, -10deg);
+    transform: rotate3d(0, 0, 1, -10deg);
+  }
+
+  60% {
+    -webkit-transform: rotate3d(0, 0, 1, 5deg);
+    transform: rotate3d(0, 0, 1, 5deg);
+  }
+
+  80% {
+    -webkit-transform: rotate3d(0, 0, 1, -5deg);
+    transform: rotate3d(0, 0, 1, -5deg);
+  }
+
+  to {
+    -webkit-transform: rotate3d(0, 0, 1, 0deg);
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+}
+
+@keyframes swing {
+  20% {
+    -webkit-transform: rotate3d(0, 0, 1, 15deg);
+    transform: rotate3d(0, 0, 1, 15deg);
+  }
+
+  40% {
+    -webkit-transform: rotate3d(0, 0, 1, -10deg);
+    transform: rotate3d(0, 0, 1, -10deg);
+  }
+
+  60% {
+    -webkit-transform: rotate3d(0, 0, 1, 5deg);
+    transform: rotate3d(0, 0, 1, 5deg);
+  }
+
+  80% {
+    -webkit-transform: rotate3d(0, 0, 1, -5deg);
+    transform: rotate3d(0, 0, 1, -5deg);
+  }
+
+  to {
+    -webkit-transform: rotate3d(0, 0, 1, 0deg);
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+}
+
+
+  .swing {
+  -webkit-transform-origin: top center;
+  transform-origin: top center;
+  -webkit-animation-name: swing;
+  animation-name: swing infi;
+}
+
+</style>
+    <meta charset="utf-8">
+
+
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="SpotiPAY">
+<meta name="apple-mobile-web-app-title" content="SpotiPAY">
+<meta name="msapplication-navbutton-color" content="#2196f3">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="msapplication-starturl" content="/">
+
+<link rel="icon" href="/spotify/icon.png">
+<link rel="apple-touch-icon" href="/spotify/icon-apple.png">
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Color theme for statusbar -->
+    <meta name="theme-color" content="#2196f3">
+    <!-- Your app title -->
+    <title>SpotiPAY</title>
+    <!-- Path to Framework7 Library CSS -->
+    <link rel="stylesheet" href="framework7.min.css">
+     <link rel="stylesheet" href="framework7-icons.css">
+    <!-- Path to your custom app styles-->
+    <!--link rel="stylesheet" href="path/to/my-app.css"-->
+  </head>
+  <body>
+    <!-- App root element -->
+    <div id="app">
+
+<div class="panel panel-left panel-cover">
+  <div class="block">
+       <button class="button" onclick="yoneticilogin()">Yönetici Girişi</button>
+       <button class="button" onclick="firebase.auth().signOut().then(function() {
+  app.dialog.alert('Çıkış Yapıldı','Çıkış Yap',function() {
+    location.reload();
+  })
+})">Çıkış Yap</button>
+     </div>
+       <script type="text/javascript">
+         function yoneticilogin() {
+		firebase.database().ref("/users/"+ firebase.auth().currentUser.uid + "/master").once('value').then(function(x) {
+         		console.log(x.val())
+         		if(x.val()){
+         			handleAdmin();
+         			app.router.navigate('/admin/');
+         		}else{
+              app.dialog.alert("Yetkiniz Bulunmamaktadır !!!","Giriş Reddedildi")
+            }
+         	})}
+       
+
+
+  var gindex = [];
+
+
+
+
+function updateAdmin() {
+  
+
+
+
+
+
+//app.dialog.preloader("Lütfen Bekleyiniz...")
+
+var data;
+firebase.database().ref("/users/").once('value').then(
+function(x){
+data = x.val();
+
+
+var index = [];
+
+// build the index
+for (var x in data) {
+   index.push(x);
+}
+
+// sort the index
+index.sort(function (a, b) {    
+   return a == b ? 0 : (a > b ? 1 : -1); 
+}); 
+
+console.log(data)
+console.log(index)
+
+var status = false;
+
+for (var i = index.length - 1; i >= 0; i--) {
+  var date = new Date
+if(data[index[i]].ödeme != date.getMonth()){
+  status = false
+}else{
+  status = true
+}
+
+
+
+
+document.getElementById("liste" + i).innerHTML = data[index[i]].isim + " " + data[index[i]].soyisim 
+
+if(data[index[i]].request != true){
+  
+if(status){
+  document.getElementById("liste" + i).innerHTML = "<i class='f7-icons'>bell</i>" + document.getElementById("liste" + i).innerHTML + "<i class='f7-icons color-theme-green'>check_round_fill</i>"
+}else{
+    document.getElementById("liste" + i).innerHTML = "<i class='f7-icons'>bell</i>" + document.getElementById("liste" + i).innerHTML + "<i class='f7-icons color-theme-red'>close_round_fill</i>"
+}
+
+
+}else{
+
+  if(status){
+  document.getElementById("liste" + i).innerHTML = "<i class='f7-icons animated swing infinite' style='color:red;'>bell</i>" + document.getElementById("liste" + i).innerHTML + "<i class='f7-icons color-theme-green'>check_round_fill</i>"
+}else{
+    document.getElementById("liste" + i).innerHTML =  "<i class='f7-icons animated swing infinite' style='color:red;'>bell</i>" + document.getElementById("liste" + i).innerHTML + "<i class='f7-icons color-theme-red'>close_round_fill</i>"
+}
+
+}
+
+
+
+gindex[i] = index[i]
+
+console.log(gindex[i])
+
+
+
+
+
+
+
+
+
+
+  //alert(data[index[i]].isim)
+}
+
+
+}
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+function handleAdmin() {
+
+
+
+
+
+//app.dialog.preloader("Lütfen Bekleyiniz...")
+
+var data;
+firebase.database().ref("/users/").once('value').then(
+function(x){
+data = x.val();
+
+
+var index = [];
+
+// build the index
+for (var x in data) {
+   index.push(x);
+}
+
+// sort the index
+index.sort(function (a, b) {    
+   return a == b ? 0 : (a > b ? 1 : -1); 
+}); 
+
+console.log(data)
+console.log(index)
+
+var status = false;
+
+for (var i = index.length - 1; i >= 0; i--) {
+	var date = new Date
+if(data[index[i]].ödeme != date.getMonth()){
+  status = false
+}else{
+  status = true
+}
+
+
+
+
+document.getElementById("liste" + i).innerHTML = data[index[i]].isim + " " + data[index[i]].soyisim 
+
+if(data[index[i]].request != true){
+  
+if(status){
+  document.getElementById("liste" + i).innerHTML = "<i class='f7-icons'>bell</i>" + document.getElementById("liste" + i).innerHTML + "<i class='f7-icons color-theme-green'>check_round_fill</i>"
+}else{
+    document.getElementById("liste" + i).innerHTML = "<i class='f7-icons'>bell</i>" + document.getElementById("liste" + i).innerHTML + "<i class='f7-icons color-theme-red'>close_round_fill</i>"
+}
+
+
+}else{
+
+  if(status){
+  document.getElementById("liste" + i).innerHTML = "<i class='f7-icons animated swing infinite' style='color:red;'>bell</i>" + document.getElementById("liste" + i).innerHTML + "<i class='f7-icons color-theme-green'>check_round_fill</i>"
+}else{
+    document.getElementById("liste" + i).innerHTML =  "<i class='f7-icons animated swing infinite' style='color:red;'>bell</i>" + document.getElementById("liste" + i).innerHTML + "<i class='f7-icons color-theme-red'>close_round_fill</i>"
+}
+
+}
+
+
+
+gindex[i] = index[i]
+
+console.log(gindex[i])
+
+
+
+
+
+
+
+
+
+
+	//alert(data[index[i]].isim)
+}
+
+function ode(argument) {
+
+if(argument != undefined){
+
+var date = new Date().getMonth()
+
+firebase.database().ref("/users/" + argument + "/ödeme").once('value').then(function(x) {
+ var data = x.val();
+
+  if(data == date){
+
+    var deleteaction = app.actions.create({
+    buttons: [
+      {
+      text: 'Bu Kişi Ödemeyi Yaptı Silmek İster Misiniz ?',
+      label: true
+    },
+    {
+      text: 'Sil',
+      onClick: function(){firebase.database().ref("/users/" + argument + "/ödeme").set(-1)
+      firebase.database().ref("/users/" + argument + "/request").set(false)
+deleteaction.close();
+app.dialog.alert("Ödeme Kaydedildi")
+updateAdmin();
+    }
+    },
+    {
+      text: 'İptal',
+      color: 'red',
+    }
+
+    ]
+}
+    )
+
+deleteaction.open();
+     
+
+
+
+  }else{
+    firebase.database().ref("/users/" + argument + "/ödeme").set(date)
+    firebase.database().ref("/users/" + argument + "/request").set(false)
+app.dialog.alert("Ödeme Kaydedildi")
+updateAdmin();
+  }
+})
+
+}
+
+
+/*
+firebase.database().ref("/users/" + argument + "/ödeme").set(new Date().getMonth())
+app.dialog.alert("Ödeme Kaydedildi")
+handleAdmin();
+*/
+}
+
+
+
+document.getElementById("liste0").addEventListener('click',function(){ode(gindex[0])
+})
+document.getElementById("liste1").addEventListener('click',function(){ode(gindex[1])
+})
+document.getElementById("liste2").addEventListener('click',function(){ode(gindex[2])
+})
+document.getElementById("liste3").addEventListener('click',function(){ode(gindex[3])
+})
+document.getElementById("liste4").addEventListener('click',function(){ode(gindex[4])
+})
+document.getElementById("liste5").addEventListener('click',function(){ode(gindex[4])
+})
+}
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+       </script>
+    </div>
+
+      <!-- Statusbar overlay -->
+      <div class="statusbar"></div>
+
+      <!-- Your main view, should have "view-main" class -->
+      <div class="view view-main">
+        <!-- Initial Page, "data-name" contains page name -->
+        <div data-name="home" class="page">
+
+          <!-- Top Navbar -->
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="title">SpotiPAY</div>
+            </div>
+          </div>
+
+          <!-- Toolbar -->
+          <div class="toolbar toolbar-bottom-md">
+            <div class="toolbar-inner">
+              <!-- Toolbar links -->
+              <button class="button" onclick="app.dialog.login('Lütfen E-Posta Ve Şifrenizi Giriniz','Giriş Yap',function (x,y) {
+//app.dialog.alert('E-Posta: ' + x + ' Şifre: ' + y);
+
+firebase.auth().signInWithEmailAndPassword(x, y).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  app.dialog.alert(error.message)
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              })">Giriş Yap</button>
+              <button class="button" onclick="signin()">Üye Ol</button>
+            </div>
+          </div>
+
+          <!-- Scrollable page content -->
+          <div class="page-content ptr-content">
+            <div class="ptr-preloader">
+      <div class="preloader"></div>
+      <div class="ptr-arrow"></div>
+    </div>
+            <h1 class="text-align-center">Merhaba</h1>
+            <h2 class="text-align-center">Devam Etmek İçin Giriş Yapınız</h2>
+            <!-- Link to another page -->
+            <p class="text-align-center"><a href="/about/">Hakkında</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="framework7.min.js"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="app.js?123"></script>,
+    <script type="text/javascript">
+      var $$ = Dom7;
+var $ptrContent = $$('.ptr-content');
+
+$ptrContent.on('ptr:refresh', function (e) {
+setTimeout(function(){
+  app.ptr.done();
+  location.reload(true);
+},2000)
+})
+
+
+function reqpay() {
+  app.dialog.preloader("İstek İşleniyor...");
+  firebase.database().ref('/users/' + firebase.auth().currentUser.uid + '/request').set(true).catch(function(e) {
+   app.dialog.close();
+   app.dialog.alert("Bir Hata Oluştu");
+  }).then(function (e) {
+   app.dialog.close();
+   app.dialog.alert("İşlem Tamamlandı");
+   document.getElementById("reqbtn").disabled = true;
+   document.getElementById("reqbtn").classList.add("color-gray")
+   document.getElementById("reqbtn").innerHTML = "Ödeme Güncelleme Talebi İşlemde"
+  })
+}
+
+
+
+
+app.dialog.preloader("Yükleniyor...")
+    	function signin() {
+    		var isim;
+    		var soyad;
+
+    		app.dialog.prompt('Adınız ?',function (isim) {
+    			isim = isim;
+    		app.dialog.prompt('Soyadınız ?',function (soyad) {
+    			soyad = soyad;
+    			app.dialog.login("Lütfen E-Posta Ve Şifrenizi Giriniz","Kayıt Ol",function(x,y) {
+    				firebase.auth().createUserWithEmailAndPassword(x, y).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  app.dialog.alert(error.message)
+
+    			}).then(function() {
+    				firebase.database().ref('/users/' + firebase.auth().currentUser.uid + '/').set({
+	isim: isim,
+	soyisim: soyad
+})
+    			})
+    		})
+
+
+});
+
+
+
+
+})
+    	}
+
+
+
+      function loggedin(isim,soyisim) {
+         app.dialog.close();
+        app.dialog.preloader("Merhaba " + isim + " " + soyisim);
+        
+        setTimeout(function(argument) {
+          app.dialog.close();
+          app.router.navigate('/main/')
+
+
+
+
+var data;
+var dataa;
+ firebase.database().ref("/users/" + firebase.auth().currentUser.uid + "/").once('value').then(
+function(x){
+data = x.toJSON()
+}
+).then(function(){
+	document.getElementById("name").innerHTML = data.isim;
+	document.getElementById("surname").innerHTML = data.soyisim;
+	document.getElementById("kullID").innerHTML = firebase.auth().currentUser.uid
+  if(data.request == true){
+   document.getElementById("reqbtn").disabled = true;
+   document.getElementById("reqbtn").classList.add("color-gray")
+   document.getElementById("reqbtn").innerHTML = "Ödeme Güncelleme Talebi İşlemde"
+
+  }
+	if(data.ödeme != new Date().getMonth()){
+		document.getElementById("paystatus").innerHTML = "Ödenmedi"
+	}else{
+		document.getElementById("paystatus").innerHTML = "Ödendi"
+	}
+}).then(function(){
+firebase.database().ref("/options/").once('value').then(function(x){
+	dataa = x.toJSON()
+	
+}).then(function() {
+	document.getElementById("oay").innerHTML = dataa.öay;
+	document.getElementById("ode").innerHTML = dataa.öde;
+})
+
+})
+
+        },2000)
+      }
+var kullanici;
+      firebase.auth().onAuthStateChanged(function(user) {
+kullanici = user;
+        if(user){
+          var isimdata;
+          var soyaddata;
+
+   var isimRef = firebase.database().ref('users/'+user.uid+'/isim')
+   isimRef.once('value').then(function(snapshot) {
+   var isimdata = snapshot.val();
+  var soyadRef = firebase.database().ref('users/'+user.uid+'/soyisim')
+   soyadRef.once('value').then(function(snapshot) {
+   var soyaddata = snapshot.val();
+loggedin(isimdata,soyaddata);
+   })
+   })
+  
+
+   
+        }else{
+app.dialog.close();
+        }
+
+      })
+
+
+      //TEST FOR APP
+
+      var fullscreenerror = app.popup.create({
+  content: '<div class="popup">'+
+              '<div class="block text-align-center">'+
+                '<h1>Hata</h1>'+
+                '<p>Lütfen Uygulamayı Kurun</p>'+
+                '<h2>Android</h2>'+
+                '<p>Sol Üstteki 3 Nokta Tuşuna Tıklayıp "Ana Ekrana Ekle" Tuşuna Basınız</p>'+
+                '<h2>IOS</h2>'+
+                '<p>Aşağıdaki Paylaş Tuşuna Basıp Alttaki Sıradan Ana Ekrana Ekle Tuşuna Basınız</p>'+
+                '<p>Eğer Uygulamayı Kurduysanız</p>'+
+                '<p>Reklam Engelleyicisini Kapatmayı Deneyin</p>'+
+              '</div>'+
+            '</div>'
+});
+
+      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone == true) {
+
+}else{
+  if(location.hash != "#dev-mode")
+fullscreenerror.open();
+}
+
+setInterval(function() {
+  $$('.ptr-content').on('ptr:refresh', function (e) {
+setTimeout(function(){
+      console.log("Yenile")
+  app.ptr.done();
+  location.reload(true);
+},2000)
+})
+},1000)
+
+    </script>
+  </body>
+</html>
