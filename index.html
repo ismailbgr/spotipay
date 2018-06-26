@@ -102,7 +102,7 @@
 <meta name="application-name" content="SpotiPAY">
 <meta name="apple-mobile-web-app-title" content="SpotiPAY">
 <meta name="msapplication-navbutton-color" content="#2196f3">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="msapplication-starturl" content="/">
 
 <link rel="icon" href="https://ismailbgr.github.io/spotipay/icon.png">
@@ -110,7 +110,7 @@
 
 
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <!-- Color theme for statusbar -->
     <meta name="theme-color" content="#2196f3">
@@ -677,6 +677,7 @@ app.dialog.close();
 
       //TEST FOR APP
 
+
       var fullscreenerror = app.popup.create({
   content: '<div class="popup">'+
               '<div class="block text-align-center">'+
@@ -693,8 +694,10 @@ app.dialog.close();
 });
 
       if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone == true) {
-
 }else{
+
+
+
   if(location.hash != "#dev-mode"){
 fullscreenerror.open();
 }
