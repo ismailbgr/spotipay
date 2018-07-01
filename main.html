@@ -1,12 +1,37 @@
-
 <div class="page no-swipeback">
   <div class="navbar">
     <div class="navbar-inner">
       <div class="title">SpotiPAY</div>
-      <div class="right"><a href="/about/"><i class="f7-icons">info</i></a></div>
+      <div class="right">
+
+        <a href="/about/" class="link icon-only">
+          <i class="f7-icons">help</i>
+      </a>
+
+      </div>
     </div>
 
   </div>
+
+
+<div class="toolbar toolbar-bottom-md fab-morph-target">
+    <div class="toolbar-inner">
+      <!-- Each Toolbar link will close FAB (morph back) on click -->
+      <a class="link fab-close" onclick="reqpay()" id="reqbtn">Güncelleme Talep Et</a>
+      <a class="link fab-close icon-only"><i class="icon f7-icons">close_round_fill</i></a>
+      <a class="link fab-close" onclick="removepay()" id="removebtn">Güncelleme Talebini Sil</a>
+    </div>
+  </div>
+
+
+<div class="fab fab-right-bottom fab-morph" data-morph-to=".toolbar">
+   <a href="#">
+      <i class="icon f7-icons">more_fill</i>
+    </a>
+  </div>
+
+
+
   <div class="page-content ptr-content">
      <div class="ptr-preloader">
       <div class="preloader"></div>
@@ -18,7 +43,8 @@
      <p>Son Ödeme Tarhihi: <a id="oay"></a></p>
      <p>Ödeme Tutarı: <a id="ode"></a>TL</p>
      <p>Ödeme Durumu: <a id="paystatus"></a></p>
-     <button class="button button-big button-raised button-fill" onclick="reqpay()" id="reqbtn">Ödeme Güncellemesi Talep Et</button>
+     <!-- <button class="button button-big button-raised button-fill" onclick="reqpay()" id="reqbtn">Ödeme Güncellemesi Talep Et</button> -->
+
     </div>
   </div>
 </div>

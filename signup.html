@@ -6,6 +6,22 @@
               <ul>
                 <li class="item-content item-input">
                   <div class="item-inner">
+                    <div class="item-title item-label">İsim</div>
+                    <div class="item-input-wrap">
+                      <input type="text" name="name" id="name" placeholder="İsim" autocomplete='name'>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">Soyisim</div>
+                    <div class="item-input-wrap">
+                      <input type="text" name="surname" id="surname" placeholder="Soyisim" autocomplete='family-name'>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
                     <div class="item-title item-label">E-Posta</div>
                     <div class="item-input-wrap">
                       <input type="text" name="username" id="username" placeholder="E-Posta" autocomplete='username'>
@@ -16,7 +32,7 @@
                   <div class="item-inner">
                     <div class="item-title item-label">Şifre</div>
                     <div class="item-input-wrap">
-                      <input type="password" name="password" id="pass" placeholder="Şifre" autocomplete='current-password'>
+                      <input type="password" name="password" id="pass" placeholder="Şifre" autocomplete='new-password'>
                     </div>
                   </div>
                 </li>
@@ -24,7 +40,7 @@
             </div>
             <div class="list">
               <ul>
-                <li><a href="#" onclick="login(document.querySelector('#username').value,document.querySelector('#pass').value)" class="item-link list-button">Giriş Yap</a></li>
+                <li><a href="#" onclick="signin(document.querySelector('#name').value,document.querySelector('#surname').value,document.querySelector('#username').value,document.querySelector('#pass').value)" class="item-link list-button">Giriş Yap</a></li>
               </ul>
               <div class="block-footer">
                 <p>Girişleriniz SSL Şifreleme İle Korunmaktadır</p>
