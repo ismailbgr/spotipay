@@ -103,7 +103,7 @@ function removepay(argument) {
    app.dialog.close();
    app.dialog.alert("Bir Hata Oluştu");
   }).then(function (e) {
-   
+   app.dialog.close();
    app.dialog.alert("İstek Silindi");
   })
 
