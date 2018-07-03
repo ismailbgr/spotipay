@@ -6,7 +6,7 @@ var app = new Framework7({
   // App id
   id: 'com.ismailbgr.spotipay',
   // Versiyon ?
-  version:"Alpha 0.0.3",
+  version:"Alpha 0.0.4",
 
   // Enable swipe panel
   panel: {
@@ -230,39 +230,7 @@ app.dialog.preloader("Yükleniyor...")
 
 
 
-
-var data;
-var dataa;
- firebase.database().ref("/users/" + firebase.auth().currentUser.uid + "/").once('value').then(
-function(x){
-data = x.toJSON()
-}
-).then(function(){
-  document.getElementById("name").innerHTML = data.isim;
-  document.getElementById("surname").innerHTML = data.soyisim;
-  document.getElementById("kullID").innerHTML = firebase.auth().currentUser.uid
-  if(data.request == true){
-   //document.getElementById("reqbtn").disabled = true;
-   //document.getElementById("reqbtn").classList.add("color-gray")
-   //document.getElementById("reqbtn").innerHTML = "Ödeme Güncelleme Talebi İşlemde"
-
-  }
-  if(data.ödeme != new Date().getMonth()){
-    document.getElementById("paystatus").innerHTML = "Ödenmedi";
-    document.getElementById("paystatus").classList.add("color-red");
-  }else{
-    document.getElementById("paystatus").innerHTML = "Ödendi"
-  }
-}).then(function(){
-firebase.database().ref("/options/").once('value').then(function(x){
-  dataa = x.toJSON()
-  
-}).then(function() {
-  document.getElementById("oay").innerHTML = dataa.öay;
-  document.getElementById("ode").innerHTML = dataa.öde;
-})
-
-})
+refreshdata();
  
 
 if(app.version != localStorage.SPVer){
@@ -278,7 +246,7 @@ var Bildirim = app.notification.create({
   titleRightText: 'Şimdi',
   subtitle: 'Güncelleme '+ app.version,
   text: news+"<p>Kapatmak İçin Yukarı Kaydırın</p>",
-  closeTimeout: 10000,
+  closeTimeout: 20000,
 });
 
 /*
@@ -375,7 +343,7 @@ clearInterval(fullscreenerrorint)
 setInterval(function() {
   $$('.ptr-content').on('ptr:refresh', function (e) {
 setTimeout(function(){
-      console.log("Yenile")
+      //console.log("Yenile")
   refreshdata()
 },2000)
 })
