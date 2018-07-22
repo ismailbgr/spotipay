@@ -6,7 +6,7 @@ var app = new Framework7({
   // App id
   id: 'com.ismailbgr.spotipay',
   // Versiyon ?
-  version:"Alpha 0.0.4",
+  version:"Alpha 0.0.5",
 
   // Enable swipe panel
   panel: {
@@ -150,6 +150,7 @@ setTimeout(function(){
 })
 
 function refreshdata() {
+
   var data;
 var dataa;
  firebase.database().ref("/users/" + firebase.auth().currentUser.uid + "/").once('value').then(
@@ -171,6 +172,7 @@ data = x.toJSON()
     document.getElementById("paystatus").classList.add("color-red");
   }else{
     document.getElementById("paystatus").innerHTML = "Ödendi"
+    document.getElementById("paystatus").classList.remove("color-red");
   }
 }).then(function(){
 firebase.database().ref("/options/").once('value').then(function(x){
@@ -179,11 +181,62 @@ firebase.database().ref("/options/").once('value').then(function(x){
 }).then(function() {
   document.getElementById("oay").innerHTML = dataa.öay;
   document.getElementById("ode").innerHTML = dataa.öde;
+  if(dataa.showWarn == true){
+    document.getElementById("warnbtn").style.display = "visible"
+  }else{
+    document.getElementById("warnbtn").style.display = "none"
+  }
 })
 
 })
 
 app.ptr.done();
+
+setTimeout(function(argument) {
+  blankpopup.close();
+
+  app.dialog.close();
+},500)
+
+}
+
+
+
+function showWarn() {
+  app.dialog.preloader("Uyarı Yükleniyor Lütfen Bekleyiniz...")
+
+
+firebase.database().ref("options/warning").once("value").then(function (snapshot) {
+app.dialog.close()
+
+  var news = snapshot.val()
+
+var warnsheet = app.sheet.create({
+  content: '<div class="sheet-modal">'+
+              '<div class="toolbar">'+
+                '<div class="toolbar-inner">'+
+                  '<div class="left"></div>'+
+                  '<div class="right">'+
+                    '<a class="link sheet-close"><div class="ios-only">Kapat</div><i class="f7-icons md-only">close</i></a>'+
+                  '</div>'+
+                '</div>'+
+              '</div>'+
+              '<div class="sheet-modal-inner">'+
+                '<div class="block">'+
+                  '<h1>Önemli Uyarı</h1>'+
+                  '<p>'+news+'</p>'+
+                '</div>'+
+              '</div>'+
+            '</div>',
+});
+warnsheet.open();
+;
+})
+
+
+
+
+
 }
 
 
@@ -212,6 +265,9 @@ function toast(text,icon,duration,type) {
 
 
 
+          var blankpopup = app.popup.create({
+  content: '<div class="popup"></div>',
+});
 
 
 
@@ -221,17 +277,19 @@ app.dialog.preloader("Yükleniyor...")
 
 
       function loggedin(isim,soyisim) {
+        blankpopup.open();
          app.dialog.close();
         app.dialog.preloader("Merhaba " + isim + " " + soyisim);
         
         setTimeout(function(argument) {
-          app.dialog.close();
+          
           app.router.navigate('/main/')
 
 
 
+
 refreshdata();
- 
+
 
 if(app.version != localStorage.SPVer){
 
