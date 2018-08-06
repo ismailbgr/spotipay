@@ -6,7 +6,7 @@ var app = new Framework7({
   // App id
   id: 'com.ismailbgr.spotipay',
   // Versiyon ?
-  version:"Alpha 0.0.5",
+  version:"Kapalı Beta 0.0.1",
 
   // Enable swipe panel
   panel: {
@@ -42,6 +42,11 @@ var app = new Framework7({
       path: '/admin/',
       url: 'admin.html',
     },
+    {
+      name: 'settings',
+      path: '/settings/',
+      url: 'settings.html',
+    },
   
   
   ],
@@ -65,11 +70,134 @@ var app = new Framework7({
           var mainView = app.views.create('.view-main');
 
 
-  function loginscr() {
-    app.router.navigate("/login/")
-  }
+/*
+Tarayıcı Manipülasyonları
 
-  function login(x,y) {
+*/
+
+
+
+
+function alert(x,y,z,t) {
+  app.dialog.alert(x,y,z,t);
+  console.warn("Yanlış Fonksiyon Kullanıldı Lütfen Düzeltin")
+}
+
+
+
+
+
+
+
+
+
+
+/*
+
+ SETTINGS AREA
+
+This area Holds Settings functions
+
+
+*/
+
+var SETTINGS_SAVE;
+
+function SETTINGS_Load() {
+  
+window.localStorage.SPSettings = window.localStorage.SPSettings || JSON.stringify({dark:true});
+
+
+SETTINGS_SAVE = JSON.parse(localStorage.SPSettings);
+
+
+
+
+
+  SETTINGS_Update();
+}
+
+
+
+
+
+function SETTINGS_Open(argument) {
+
+  app.dialog.preloader("Yükleniyor...")
+  app.router.navigate('/settings/');
+  setTimeout(function() {
+
+    
+
+
+    if(SETTINGS_SAVE.dark == true){
+document.getElementById("darkcheck").checked = true;
+
+}else{
+
+}
+
+app.dialog.close();
+
+
+
+  },1000);
+}
+
+
+function SETTINGS_Update(argument) {
+
+
+  if( SETTINGS_SAVE.dark == true){
+      document.getElementById("app").classList.add("theme-dark");
+  //document.getElementById("app").classList.add("color-theme-green");
+}else{
+    document.getElementById("app").classList.remove("theme-dark");
+  //document.getElementById("app").classList.remove("color-theme-green");
+}
+
+
+}
+
+
+function SETTINGS_Dark(argument) {
+  console.log(argument)
+if (argument) {
+  SETTINGS_SAVE.dark = true;
+}else{
+  SETTINGS_SAVE.dark = false;
+}
+
+localStorage.SPSettings = JSON.stringify(SETTINGS_SAVE);
+
+SETTINGS_Update();
+}
+
+
+
+
+
+
+SETTINGS_Load();
+
+
+SETTINGS_Update();
+
+
+
+
+
+
+
+//Settings Area Over
+
+
+
+
+//LOG İN OUT////////////////////////////////////
+
+  
+function login(x,y) {
     app.dialog.preloader("Lütfen Bekleyin");
     firebase.auth().signInWithEmailAndPassword(x, y).catch(function(error) {
   // Handle Errors here.
@@ -81,6 +209,34 @@ var app = new Framework7({
   })
 
 }
+
+function logout() {
+
+ app.dialog.alert('Çıkış Yapıldı','Çıkış Yap',function(){
+  firebase.auth().signOut();
+    location.reload();
+  })
+    }
+
+    function signup(argument) {
+app.dialog.alert("Şu Anda Kapalı Betadayız ve Yeni Kayıt Kabul Etmiyoruz. Lütfen Daha Sonra Tekrar Ziyaret Edin")
+
+//       app.router.navigate('/signup/',{
+//   ignoreCache: true,
+// })
+    }
+
+
+/////////////////////////////////////////////////
+
+
+
+  function loginscr() {
+    app.router.navigate("/login/",{
+  ignoreCache: true,
+})
+  }
+
 
 function reqpay() {
   app.dialog.preloader("İstek İşleniyor...");
