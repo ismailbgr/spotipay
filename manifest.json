@@ -4,7 +4,7 @@
   "lang": "tr-TR",
   "start_url": "/spotipay",
   "display": "standalone",
-  "theme_color": "#2196f3",
+  "theme_color": "#4CAF50",
   "icons": [
     {
       "src": "https://ismailbgr.github.io/spotipay/icon.png"
