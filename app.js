@@ -6,7 +6,7 @@ var app = new Framework7({
   // App id
   id: 'com.ismailbgr.spotipay',
   // Versiyon ?
-  version:"Kapalı Beta 0.0.1",
+  version:"Kapalı Beta 0.0.1a",
 
   // Enable swipe panel
   panel: {
@@ -450,8 +450,11 @@ refreshdata();
 if(app.version != localStorage.SPVer){
 
 
-firebase.database().ref("options/yenilikler").once("value").then(function (snapshot) {
-  var news = snapshot.val()
+// firebase.database().ref("options/yenilikler").once("value").then(function (snapshot) {
+//   var news = snapshot.val()
+
+var news = "<p>Şifre Değiştirme Özelliği Geldi</p>"+
+"<p>Artık Yenilikler Gösterilirken İnternet Harcamayacak (Oley)</p>"
 
 // Create full-layout notification
 var Bildirim = app.notification.create({
@@ -486,7 +489,7 @@ var updatesheet = app.sheet.create({
 */
 Bildirim.open();
 localStorage.SPVer = app.version;
-})
+// })
 
 }
 
@@ -562,3 +565,63 @@ setTimeout(function(){
 },2000)
 })
 },1000)
+
+
+//WIP
+
+function changepass(argument) {
+  
+
+app.dialog.login("Şifrenizi Değiştirmek İçin E-Posta Ve Şifrenizi Yeniden Giriniz","Yeniden Giriş Yapın",function(uname,pass) {
+
+
+var user = firebase.auth().currentUser;
+var credential = firebase.auth.EmailAuthProvider.credential(
+    uname,
+    pass
+);
+
+// Prompt the user to re-provide their sign-in credentials
+
+user.reauthenticateAndRetrieveDataWithCredential(credential).then(function() {
+  
+  app.dialog.password("Yeni Şifrenizi Giriniz","Yeni Şifre",function(newpass) {
+  
+     app.dialog.password("Yeni Şifrenizi Tekrar Giriniz","Yeni Şifre Onaylama",function(confirmnewpass) {
+
+     if(confirmnewpass == newpass){
+
+      user.updatePassword(confirmnewpass).then(function() {
+  app.dialog.alert("Şifre Değişimi Başarılı")
+}).catch(function(error) {
+  alert(error.errorMessage,"Bir Hata Oluştu")
+});
+
+     }else{
+      app.dialog.alert("Şifreler Uyuşmuyor")
+     }
+
+
+     })
+
+  })
+
+}).catch(function(error) {
+  app.dialog.alert("Yanlış E-Posta/Şifre");
+  changepass();
+});
+
+
+
+})
+
+
+
+
+
+
+
+
+
+
+}
