@@ -80,7 +80,7 @@ Tarayıcı Manipülasyonları
 
 function alert(x,y,z,t) {
   app.dialog.alert(x,y,z,t);
-  console.warn("Yanlış Fonksiyon Kullanıldı Lütfen Düzeltin")
+  console.warn("Yanlış Fonksiyon Kullanıldı Lütfen Düzeltin");
 }
 
 
@@ -123,7 +123,7 @@ SETTINGS_SAVE = JSON.parse(localStorage.SPSettings);
 
 function SETTINGS_Open(argument) {
 
-  app.dialog.preloader("Yükleniyor...")
+  app.dialog.preloader("Yükleniyor...");
   app.router.navigate('/settings/');
   setTimeout(function() {
 
@@ -161,7 +161,7 @@ function SETTINGS_Update(argument) {
 
 
 function SETTINGS_Dark(argument) {
-  console.log(argument)
+  console.log(argument);
 if (argument) {
   SETTINGS_SAVE.dark = true;
 }else{
@@ -206,7 +206,7 @@ function login(x,y) {
   app.dialog.alert(error.message);
   }).then(function() {
     app.dialog.close();
-  })
+  });
 
 }
 
@@ -215,11 +215,11 @@ function logout() {
  app.dialog.alert('Çıkış Yapıldı','Çıkış Yap',function(){
   firebase.auth().signOut();
     location.reload();
-  })
+  });
     }
 
     function signup(argument) {
-app.dialog.alert("Şu Anda Kapalı Betadayız ve Yeni Kayıt Kabul Etmiyoruz. Lütfen Daha Sonra Tekrar Ziyaret Edin")
+app.dialog.alert("Şu Anda Kapalı Betadayız ve Yeni Kayıt Kabul Etmiyoruz. Lütfen Daha Sonra Tekrar Ziyaret Edin");
 
 //       app.router.navigate('/signup/',{
 //   ignoreCache: true,
@@ -234,7 +234,7 @@ app.dialog.alert("Şu Anda Kapalı Betadayız ve Yeni Kayıt Kabul Etmiyoruz. L�
   function loginscr() {
     app.router.navigate("/login/",{
   ignoreCache: true,
-})
+});
   }
 
 
@@ -249,7 +249,7 @@ function reqpay() {
    //document.getElementById("reqbtn").disabled = true;
    //document.getElementById("reqbtn").classList.add("disabled")
    //document.getElementById("reqbtn").innerHTML = "Ödeme Güncelleme Talebi İşlemde"
-  })
+  });
 }
 
 function removepay(argument) {
@@ -261,7 +261,7 @@ function removepay(argument) {
   }).then(function (e) {
    app.dialog.close();
    app.dialog.alert("İstek Silindi");
-  })
+  });
 
 }
 
@@ -273,16 +273,16 @@ function removepay(argument) {
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
-  app.dialog.alert(error.message)
+  app.dialog.alert(error.message);
   app.dialog.close();
 
           }).then(function() {
             firebase.database().ref('/users/' + firebase.auth().currentUser.uid + '/').set({
   isim: name,
   soyisim: surname
-})
+});
             app.dialog.close();
-          })
+          });
       }
 
 
@@ -306,6 +306,8 @@ setTimeout(function(){
 })
 
 function refreshdata() {
+
+setTimeout(function(){
 
   var data;
 var dataa;
@@ -354,6 +356,8 @@ setTimeout(function(argument) {
   app.dialog.close();
 },500)
 
+},200)
+
 }
 
 
@@ -386,7 +390,6 @@ var warnsheet = app.sheet.create({
             '</div>',
 });
 warnsheet.open();
-;
 })
 
 
@@ -453,8 +456,7 @@ if(app.version != localStorage.SPVer){
 // firebase.database().ref("options/yenilikler").once("value").then(function (snapshot) {
 //   var news = snapshot.val()
 
-var news = "<p>Şifre Değiştirme Özelliği Geldi</p>"+
-"<p>Artık Yenilikler Gösterilirken İnternet Harcamayacak (Oley)</p>"
+var news = "<p>Açılışta Verilerin Gözükmemesi Sorunu Giderildi</p>"
 
 // Create full-layout notification
 var Bildirim = app.notification.create({
