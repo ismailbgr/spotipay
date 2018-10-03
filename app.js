@@ -6,7 +6,7 @@ var app = new Framework7({
   // App id
   id: 'com.ismailbgr.spotipay',
   // Versiyon ?
-  version:"Kapalı Beta 0.0.1a",
+  version:"Kapalı Beta 0.0.2a",
 
   // Enable swipe panel
   panel: {
@@ -325,13 +325,9 @@ data = x.toJSON()
    //document.getElementById("reqbtn").innerHTML = "Ödeme Güncelleme Talebi İşlemde"
 
   }
-  if(data.ödeme != new Date().getMonth()){
-    document.getElementById("paystatus").innerHTML = "Ödenmedi";
-    document.getElementById("paystatus").classList.add("color-red");
-  }else{
-    document.getElementById("paystatus").innerHTML = "Ödendi"
-    document.getElementById("paystatus").classList.remove("color-red");
-  }
+  
+
+  
 }).then(function(){
 firebase.database().ref("/options/").once('value').then(function(x){
   dataa = x.toJSON()
@@ -344,6 +340,24 @@ firebase.database().ref("/options/").once('value').then(function(x){
   }else{
     document.getElementById("warnbtn").style.display = "none"
   }
+
+
+  let farkay = (new Date().getMonth()+1) - data.ödeme;
+    console.log(farkay);
+
+    if(farkay < 0){
+
+      farkay = 12 - (farkay * -1);
+
+    }
+
+    console.log(new Date().getMonth()+1)
+    console.log(data.ödeme)
+    console.log(farkay);
+    console.log(dataa.öde)
+
+    document.getElementById("paystatus").innerHTML = farkay*dataa.öde;
+
 })
 
 })
@@ -456,7 +470,7 @@ if(app.version != localStorage.SPVer){
 // firebase.database().ref("options/yenilikler").once("value").then(function (snapshot) {
 //   var news = snapshot.val()
 
-var news = "<p>Açılışta Verilerin Gözükmemesi Sorunu Giderildi</p>"
+var news = "<p>Ödenme Ödenmeme Durumu Yerine Borç Miktarı Eklendi</p>"
 
 // Create full-layout notification
 var Bildirim = app.notification.create({

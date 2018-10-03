@@ -189,7 +189,7 @@ var status = false;
 
 for (var i = index.length - 1; i >= 0; i--) {
   var date = new Date
-if(data[index[i]].ödeme != date.getMonth()){
+if(data[index[i]].ödeme != (date.getMonth()+1)){
   status = false
 }else{
   status = true
@@ -291,7 +291,7 @@ var status = false;
 
 for (var i = index.length - 1; i >= 0; i--) {
 	var date = new Date
-if(data[index[i]].ödeme != date.getMonth()){
+if(data[index[i]].ödeme != (date.getMonth()+1)){
   status = false
 }else{
   status = true
@@ -343,7 +343,7 @@ function ode(argument) {
 
 if(argument != undefined){
 
-var date = new Date().getMonth()
+var date = (new Date().getMonth()+1)
 
 firebase.database().ref("/users/" + argument + "/ödeme").once('value').then(function(x) {
  var data = x.val();
