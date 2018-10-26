@@ -219,7 +219,21 @@ function logout() {
     }
 
     function signup(argument) {
-app.dialog.alert("Şu Anda Kapalı Betadayız ve Yeni Kayıt Kabul Etmiyoruz. Lütfen Daha Sonra Tekrar Ziyaret Edin");
+app.dialog.prompt("Şu Anda Kapalı Betadayız ve Yeni Kayıt Kabul Etmiyoruz. Eğer Kayıt Kodunuz Varsa Giriniz","İzin Verilmedi",(x)=>{
+
+firebase.database().ref("/options/signcode").once("value").then((snapshot)=>{
+  
+
+  if(x == snapshot.val()){
+    app.router.navigate('/signup/',{
+        ignoreCache: true,
+      })
+    }else{app.dialog.alert("Kod Yanlış!!!")}
+
+})
+
+  
+});
 
 //       app.router.navigate('/signup/',{
 //   ignoreCache: true,
@@ -583,8 +597,6 @@ setTimeout(function(){
 },1000)
 
 
-//WIP
-
 function changepass(argument) {
   
 
@@ -640,4 +652,16 @@ user.reauthenticateAndRetrieveDataWithCredential(credential).then(function() {
 
 
 
+}
+
+//WIP
+
+function gen_sign_code(){
+ 
+let dictonary = ["a","c","e","f","1","3","4","6","8","9"];
+let string = dictonary[Math.round(Math.random()*9)] + dictonary[Math.round(Math.random()*9)] + dictonary[Math.round(Math.random()*9)] + dictonary[Math.round(Math.random()*9)] + dictonary[Math.round(Math.random()*9)] + dictonary[Math.round(Math.random()*9)] + dictonary[Math.round(Math.random()*9)] + dictonary[Math.round(Math.random()*9)] + dictonary[Math.round(Math.random()*9)] + dictonary[Math.round(Math.random()*9)];
+
+firebase.database().ref("/options/signcode").set(string)
+
+return string;
 }
