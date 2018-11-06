@@ -453,7 +453,7 @@ function toast(text,icon,duration,type) {
 
 
           var blankpopup = app.popup.create({
-  content: '<div class="popup" style="background:linear-gradient(black,white);"></div>',
+  content: '<div class="popup" style="background:linear-gradient(black,#4CAF50);"></div>',
 });
 
 
