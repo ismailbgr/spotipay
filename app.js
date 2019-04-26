@@ -6,7 +6,7 @@ var app = new Framework7({
   // App id
   id: 'com.ismailbgr.spotipay',
   // Versiyon ?
-  version:"Kapalı Beta 0.0.2a",
+  version:"Kapalı Beta 0.0.3a",
 
   // Enable swipe panel
   panel: {
@@ -484,7 +484,7 @@ if(app.version != localStorage.SPVer){
 // firebase.database().ref("options/yenilikler").once("value").then(function (snapshot) {
 //   var news = snapshot.val()
 
-var news = "<p>Ödenme Ödenmeme Durumu Yerine Borç Miktarı Eklendi</p>"
+var news = "<p>Yöneticilerin Diğer Kullanıcıların Borç Miktarlarını Görmeleri Sağlandı </p>"
 
 // Create full-layout notification
 var Bildirim = app.notification.create({

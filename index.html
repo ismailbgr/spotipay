@@ -156,7 +156,6 @@
 
 
 function updateAdmin() {
-  
 
 
 
@@ -186,9 +185,13 @@ console.log(data)
 console.log(index)
 
 var status = false;
-
+var dataa;
+var borc;
+var sira=5;
+var farkay;
 for (var i = index.length - 1; i >= 0; i--) {
-  var date = new Date
+  console.log(i)
+	var date = new Date
 if(data[index[i]].ödeme != (date.getMonth()+1)){
   status = false
 }else{
@@ -196,10 +199,76 @@ if(data[index[i]].ödeme != (date.getMonth()+1)){
 }
 
 
+//Borç Sistemi
 
 
-document.getElementById("liste" + i).innerHTML = data[index[i]].isim + " " + data[index[i]].soyisim 
+firebase.database().ref("/options/").once('value').then(function(x){
+  dataa = x.toJSON()
+  
+}).then(function() {
 
+
+console.log()
+
+
+   farkay = (new Date().getMonth()+1) - data[index[sira]].ödeme;
+    console.log(farkay);
+
+    if(farkay < 0){
+
+      farkay = 12 - (farkay * -1);
+
+    }
+
+    console.log(new Date().getMonth()+1)
+    console.log(data[index[sira]].ödeme)
+    console.log(farkay);
+    console.log(dataa.öde)
+
+    borc = farkay*dataa.öde;
+    console.log(borc)
+    document.getElementById("liste" + sira).innerHTML = data[index[sira]].isim + " " + data[index[sira]].soyisim+" - "+borc+"₺";
+
+    
+if(data[index[sira]].request != true){
+  
+  if(status){
+    document.getElementById("liste" + sira).innerHTML = "<i class='f7-icons'>bell</i>" + document.getElementById("liste" + sira).innerHTML + "<i class='f7-icons color-theme-green'>check_round_fill</i>"
+  }else{
+      document.getElementById("liste" + sira).innerHTML = "<i class='f7-icons'>bell</i>" + document.getElementById("liste" + sira).innerHTML + "<i class='f7-icons color-theme-red'>close_round_fill</i>"
+  }
+  
+  
+  }else{
+  
+    if(status){
+    document.getElementById("liste" + sira).innerHTML = "<i class='f7-icons animated swing infinite' style='color:red;'>bell</i>" + document.getElementById("liste" + sira).innerHTML + "<i class='f7-icons color-theme-green'>check_round_fill</i>"
+  }else{
+      document.getElementById("liste" + sira).innerHTML =  "<i class='f7-icons animated swing infinite' style='color:red;'>bell</i>" + document.getElementById("liste" + sira).innerHTML + "<i class='f7-icons color-theme-red'>close_round_fill</i>"
+  }
+  
+  }
+
+
+
+
+
+
+    sira=sira-1;
+
+})
+
+
+
+
+
+
+
+
+
+
+//document.getElementById("liste" + i).innerHTML = data[index[i]].isim + " " + data[index[i]].soyisim+"-"+borc;
+/*
 if(data[index[i]].request != true){
   
 if(status){
@@ -219,7 +288,7 @@ if(status){
 
 }
 
-
+*/
 
 gindex[i] = index[i]
 
@@ -234,7 +303,7 @@ console.log(gindex[i])
 
 
 
-  //alert(data[index[i]].isim)
+	//alert(data[index[i]].isim)
 }
 
 
@@ -288,8 +357,12 @@ console.log(data)
 console.log(index)
 
 var status = false;
-
+var dataa;
+var borc;
+var sira=5;
+var farkay;
 for (var i = index.length - 1; i >= 0; i--) {
+  console.log(i)
 	var date = new Date
 if(data[index[i]].ödeme != (date.getMonth()+1)){
   status = false
@@ -298,10 +371,76 @@ if(data[index[i]].ödeme != (date.getMonth()+1)){
 }
 
 
+//Borç Sistemi
 
 
-document.getElementById("liste" + i).innerHTML = data[index[i]].isim + " " + data[index[i]].soyisim 
+firebase.database().ref("/options/").once('value').then(function(x){
+  dataa = x.toJSON()
+  
+}).then(function() {
 
+
+console.log()
+
+
+   farkay = (new Date().getMonth()+1) - data[index[sira]].ödeme;
+    console.log(farkay);
+
+    if(farkay < 0){
+
+      farkay = 12 - (farkay * -1);
+
+    }
+
+    console.log(new Date().getMonth()+1)
+    console.log(data[index[sira]].ödeme)
+    console.log(farkay);
+    console.log(dataa.öde)
+
+    borc = farkay*dataa.öde;
+    console.log(borc)
+    document.getElementById("liste" + sira).innerHTML = data[index[sira]].isim + " " + data[index[sira]].soyisim+" - "+borc+"₺";
+
+    
+if(data[index[sira]].request != true){
+  
+  if(status){
+    document.getElementById("liste" + sira).innerHTML = "<i class='f7-icons'>bell</i>" + document.getElementById("liste" + sira).innerHTML + "<i class='f7-icons color-theme-green'>check_round_fill</i>"
+  }else{
+      document.getElementById("liste" + sira).innerHTML = "<i class='f7-icons'>bell</i>" + document.getElementById("liste" + sira).innerHTML + "<i class='f7-icons color-theme-red'>close_round_fill</i>"
+  }
+  
+  
+  }else{
+  
+    if(status){
+    document.getElementById("liste" + sira).innerHTML = "<i class='f7-icons animated swing infinite' style='color:red;'>bell</i>" + document.getElementById("liste" + sira).innerHTML + "<i class='f7-icons color-theme-green'>check_round_fill</i>"
+  }else{
+      document.getElementById("liste" + sira).innerHTML =  "<i class='f7-icons animated swing infinite' style='color:red;'>bell</i>" + document.getElementById("liste" + sira).innerHTML + "<i class='f7-icons color-theme-red'>close_round_fill</i>"
+  }
+  
+  }
+
+
+
+
+
+
+    sira=sira-1;
+
+})
+
+
+
+
+
+
+
+
+
+
+//document.getElementById("liste" + i).innerHTML = data[index[i]].isim + " " + data[index[i]].soyisim+"-"+borc;
+/*
 if(data[index[i]].request != true){
   
 if(status){
@@ -321,7 +460,7 @@ if(status){
 
 }
 
-
+*/
 
 gindex[i] = index[i]
 
@@ -380,10 +519,41 @@ deleteaction.open();
 
 
   }else{
-    firebase.database().ref("/users/" + argument + "/ödeme").set(date)
+
+
+    var areusureaction = app.actions.create({
+    buttons: [
+      {
+      text: 'Bu Kişi İçin Ödemeyi Kaydetmek İster Misiniz ?',
+      label: true
+    },
+    {
+      text: 'Evet',
+      onClick: function(){firebase.database().ref("/users/" + argument + "/ödeme").set(date)
     firebase.database().ref("/users/" + argument + "/request").set(false)
 app.dialog.alert("Ödeme Kaydedildi")
 updateAdmin();
+    }
+    },
+    {
+      text: 'Hayır',
+      color: 'red',
+    }
+
+    ]
+})
+
+areusureaction.open();
+
+
+
+
+
+
+//     firebase.database().ref("/users/" + argument + "/ödeme").set(date)
+//     firebase.database().ref("/users/" + argument + "/request").set(false)
+// app.dialog.alert("Ödeme Kaydedildi")
+// updateAdmin();
   }
 })
 
