@@ -6,7 +6,7 @@ var app = new Framework7({
   // App id
   id: 'com.ismailbgr.spotipay',
   // Versiyon ?
-  version:"Kapalı Beta 0.0.3b",
+  version:"Kapalı Beta 0.0.3c",
 
   // Enable swipe panel
   panel: {
