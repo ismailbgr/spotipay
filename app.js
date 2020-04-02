@@ -6,7 +6,7 @@ var app = new Framework7({
   // App id
   id: 'com.ismailbgr.spotipay',
   // Versiyon ?
-  version:"Kapalı Beta 0.0.3a",
+  version:"Kapalı Beta 0.0.3b",
 
   // Enable swipe panel
   panel: {
@@ -484,7 +484,7 @@ if(app.version != localStorage.SPVer){
 // firebase.database().ref("options/yenilikler").once("value").then(function (snapshot) {
 //   var news = snapshot.val()
 
-var news = "<p>Yöneticilerin Diğer Kullanıcıların Borç Miktarlarını Görmeleri Sağlandı </p>"
+var news = "<p>Koronavirüs Ödeme Yöntemi Eklendi</p>"
 
 // Create full-layout notification
 var Bildirim = app.notification.create({
