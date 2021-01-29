@@ -105,7 +105,7 @@ var SETTINGS_SAVE;
 
 function SETTINGS_Load() {
   
-window.localStorage.SPSettings = window.localStorage.SPSettings || JSON.stringify({dark:true});
+window.localStorage.SPSettings = window.localStorage.SPSettings || JSON.stringify({dark:false});
 
 
 SETTINGS_SAVE = JSON.parse(localStorage.SPSettings);
